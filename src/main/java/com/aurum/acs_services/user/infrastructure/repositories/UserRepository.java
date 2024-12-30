@@ -3,6 +3,7 @@ package com.aurum.acs_services.user.infrastructure.repositories;
 import com.aurum.acs_services.user.application.abstractions.IUserMapper;
 import com.aurum.acs_services.user.application.abstractions.IUserRepository;
 import com.aurum.acs_services.user.domain.aggregates.UserAggregate;
+import com.aurum.acs_services.user.infrastructure.entities.UserEntity;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,25 @@ public class UserRepository implements IUserRepository {
         var aggregate = userMapper.toDomain(savedEntity);
 
         return aggregate.orElse(null);
+    }
+
+    @Override
+    public UserAggregate login(String email, String password) {
+        try {
+            var query = entityManager.createQuery(
+                    "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password",
+                    UserEntity.class
+            );
+
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+
+            var userEntity = query.getSingleResult();
+            var aggregate = userMapper.toDomain(userEntity);
+
+            return aggregate.orElse(null);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
