@@ -1,6 +1,6 @@
 package com.aurum.acs_services.user.application.usecases;
 
-import com.aurum.acs_services.shared.application.abstractions.IJwtHandler;
+import com.aurum.acs_services.user.application.abstractions.IJwtHandler;
 import com.aurum.acs_services.shared.application.exceptions.NotFoundException;
 import com.aurum.acs_services.user.application.abstractions.IUserLoginUseCase;
 import com.aurum.acs_services.user.application.abstractions.IUserRepository;
