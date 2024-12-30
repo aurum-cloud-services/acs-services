@@ -24,6 +24,8 @@ public class AcsServicesApplication {
 		String postgresPassword = dotenv.get("POSTGRES_PASSWORD");
 		String postgresDdlMode = dotenv.get("POSTGRES_DDL_MODE", "validate");
 
+		String jwtSecretKey = dotenv.get("JWT_SECRET_KEY");
+
 		if (rabbitMqHost == null || rabbitMqHost.isEmpty()) throw new RuntimeException("NO RABBITMQ HOST SET");
 		if (rabbitMqPort == null || rabbitMqPort.isEmpty()) throw new RuntimeException("NO RABBITMQ PORT SET");
 		if (rabbitMqUser == null || rabbitMqUser.isEmpty()) throw new RuntimeException("NO RABBITMQ USER SET");
@@ -32,6 +34,8 @@ public class AcsServicesApplication {
 		if (postgresUri == null || postgresUri.isEmpty()) throw new RuntimeException("NO POSTGRES URI SET");
 		if (postgresUser == null || postgresUser.isEmpty()) throw new RuntimeException("NO POSTGRES USER SET");
 		if (postgresPassword == null || postgresPassword.isEmpty()) throw new RuntimeException("NO POSTGRES PASSWORD SET");
+
+		if (jwtSecretKey == null || jwtSecretKey.isEmpty()) throw new RuntimeException("NO JWT KEY SET");
 
 		System.setProperty("spring.rabbitmq.host", rabbitMqHost);
 		System.setProperty("spring.rabbitmq.port", rabbitMqPort);
