@@ -5,6 +5,7 @@ import com.aurum.acs_services.user.application.abstractions.IUserRepository;
 import com.aurum.acs_services.user.domain.aggregates.UserAggregate;
 import com.aurum.acs_services.user.infrastructure.entities.UserEntity;
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,6 +19,7 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    @Transactional
     public UserAggregate save(UserAggregate user) {
         var entity = userMapper.toPersistance(user);
 
