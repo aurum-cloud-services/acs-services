@@ -29,6 +29,21 @@ public class UserAggregate {
         this.password = password;
     }
 
+    private UserAggregate(
+            Long id,
+            String name,
+            String email,
+            String cpf,
+            String password,
+            LocalDate createdAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        this.password = password;
+        this.createdAt = createdAt;
+    }
+
     public static UserAggregate build(
             String name,
             String email,
@@ -36,6 +51,21 @@ public class UserAggregate {
             String password
     ) {
         var aggregate = new UserAggregate(name, email, cpf, password);
+
+        aggregate.validateDomain();
+
+        return aggregate;
+    }
+
+    public static UserAggregate build(
+            Long id,
+            String name,
+            String email,
+            String cpf,
+            String password,
+            LocalDate createdAt
+    ) {
+        var aggregate = new UserAggregate(id, name, email, cpf, password, createdAt);
 
         aggregate.validateDomain();
 
