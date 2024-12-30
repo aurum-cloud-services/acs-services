@@ -5,7 +5,10 @@ import com.aurum.acs_services.user.application.abstractions.IUserLoginUseCase;
 import com.aurum.acs_services.user.application.abstractions.IUserRepository;
 import com.aurum.acs_services.user.infrastructure.dtos.LoginDTO;
 import com.aurum.acs_services.user.infrastructure.dtos.LoginOutputDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserLoginUseCase implements IUserLoginUseCase {
     private final IUserRepository userRepository;
 
@@ -14,13 +17,13 @@ public class UserLoginUseCase implements IUserLoginUseCase {
     }
 
     @Override
-    public LoginOutputDTO run(LoginDTO dto) {
+    public ResponseEntity<LoginOutputDTO> run(LoginDTO dto) {
         var user = userRepository.login(dto.identifier(), dto.password());
 
         if (user == null) {
             throw new NotFoundException("user");
         }
 
-        return new LoginOutputDTO("User found", "", 200);
+        return ResponseEntity.ok(new LoginOutputDTO("User found", "", 200));
     }
 }
