@@ -31,14 +31,15 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public UserAggregate login(String email, String password) {
+    public UserAggregate login(String identifier, String password) {
         try {
             var query = entityManager.createQuery(
-                    "SELECT u FROM UserEntity u WHERE u.email = :email AND u.password = :password",
+                    "SELECT u FROM UserEntity u WHERE (u.email = :email OR u.cpf = :cpf) AND u.password = :password",
                     UserEntity.class
             );
 
-            query.setParameter("email", email);
+            query.setParameter("email", identifier);
+            query.setParameter("cpf", identifier);
             query.setParameter("password", password);
 
             var userEntity = query.getSingleResult();

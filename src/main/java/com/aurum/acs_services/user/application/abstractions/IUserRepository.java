@@ -4,5 +4,5 @@ import com.aurum.acs_services.user.domain.aggregates.UserAggregate;
 
 public interface IUserRepository {
     UserAggregate save(UserAggregate user);
-    UserAggregate login(String email, String password);
+    UserAggregate login(String identifier, String password);
 }
