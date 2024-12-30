@@ -18,7 +18,7 @@ public class LoginController {
         this.useCase = useCase;
     }
 
-    @PostMapping("/v1/login")
+    @PostMapping({ "/v1/user/login", "/v1/user/login/" })
     public ResponseEntity<?> performV1(@Valid @RequestBody LoginDTO dto) {
         return this.useCase.run(dto);
     }
