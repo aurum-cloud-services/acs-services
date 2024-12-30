@@ -1,5 +1,6 @@
 package com.aurum.acs_services.user.application.usecases;
 
+import com.aurum.acs_services.shared.application.abstractions.IJwtHandler;
 import com.aurum.acs_services.shared.application.exceptions.NotFoundException;
 import com.aurum.acs_services.user.application.abstractions.IUserLoginUseCase;
 import com.aurum.acs_services.user.application.abstractions.IUserRepository;
@@ -11,9 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserLoginUseCase implements IUserLoginUseCase {
     private final IUserRepository userRepository;
+    private final IJwtHandler jwtHandler;
 
-    public UserLoginUseCase(IUserRepository userRepository) {
+    public UserLoginUseCase(IUserRepository userRepository, IJwtHandler jwtHandler) {
         this.userRepository = userRepository;
+        this.jwtHandler = jwtHandler;
     }
 
     @Override
@@ -24,6 +27,8 @@ public class UserLoginUseCase implements IUserLoginUseCase {
             throw new NotFoundException("user");
         }
 
-        return ResponseEntity.ok(new LoginOutputDTO("User found", "", 200));
+        String token = jwtHandler.encode(user);
+
+        return ResponseEntity.ok(new LoginOutputDTO("User found", token, 200));
     }
 }
