@@ -1,7 +1,9 @@
 package com.aurum.acs_services.user.domain.exceptions;
 
-public class CpfIsNotValidException extends RuntimeException {
+import com.aurum.acs_services.shared.domain.contracts.BaseHttpException;
+
+public class CpfIsNotValidException extends BaseHttpException {
     public CpfIsNotValidException() {
-        super("Cpf is not valid");
+        super("Cpf is not valid", 400);
     }
 }
